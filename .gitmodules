@@ -1,0 +1,6 @@
+[submodule "lib/sst-rackhelpers"]
+	path = libs/sst-rackhelpers
+	url = https://github.com/surge-synthesizer/sst-rackhelpers
+[submodule "libs/tipsy-encoder"]
+	path = libs/tipsy-encoder
+	url = https://github.com/baconpaul/tipsy-encoder

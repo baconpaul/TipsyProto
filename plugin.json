@@ -1,0 +1,24 @@
+{
+	"slug": "TipsyProto",
+	"name": "Tipsy Prototypes",
+	"version": "2.0.0",
+	"license": "MIT",
+	"author": "@baconpaul",
+	"authorEmail": "",
+	"authorUrl": "https://baconpaul.org/",
+	"pluginUrl": "",
+	"manualUrl": "https://github.com/baconpaul/tipsy-proto/blob/main/doc/manual.md",
+	"sourceUrl": "https://github.com/baconpaul/tipsy-proto",
+	"donateUrl": "",
+	"modules": [
+			 {"slug": "TipsySendText",
+				 "name": "Send some text",
+				 "description": "Prototoype",
+				 "tags": [ ] },
+
+		{"slug": "TipsyRecvText",
+			"name": "Send some text",
+			"description": "Prototoype",
+			"tags": [ ] }
+	]
+}
