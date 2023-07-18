@@ -45,7 +45,7 @@ struct TipsyRecvText : rack::Module
         auto rf = decoder.readFloat(inputs[TXT_IN].getVoltage());
         if (!decoder.isError(rf))
         {
-            if (rf == tipsy::ProtocolDecoder::BODY_READY)
+            if (rf == tipsy::DecoderResult::BODY_READY)
             {
                 // Obviously check more things like it s a string byg
                 currentMessage = std::string((const char*)recvBuffer);
