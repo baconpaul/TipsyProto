@@ -2,7 +2,7 @@
 // Created by Paul Walker on 7/14/23.
 //
 
-#include "rack.hpp"
+#include "TipsyProto.hpp"
 #include "TipsyWidgetBits.h"
 #include <tipsy/tipsy.h>
 
@@ -90,6 +90,12 @@ struct TxtOut : rack::LedDisplayTextField
     }
 };
 
+struct USB_A_Port : rack::app::SvgPort {
+	USB_A_Port() {
+		rack::app::SvgPort::setSvg(rack::window::Svg::load(rack::asset::plugin(pluginInstance, "res/USB-A.svg")));
+	}
+};
+
 struct TipsyRecvTextWidget : rack::ModuleWidget
 {
     TipsyRecvTextWidget(TipsyRecvText *m) {
@@ -108,7 +114,7 @@ struct TipsyRecvTextWidget : rack::ModuleWidget
         addChild(ti);
 
         addInput(
-            rack::createInput<rack::PJ301MPort>(rack::Vec(40, RACK_HEIGHT - 40), module, TipsyRecvText::TXT_IN));
+            rack::createInput<USB_A_Port>(rack::Vec(40, RACK_HEIGHT - 40), module, TipsyRecvText::TXT_IN));
 
 
     }

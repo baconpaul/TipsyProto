@@ -94,6 +94,12 @@ struct TxtIn : rack::LedDisplayTextField
         }
     }
 };
+
+struct USB_B_Port : rack::app::SvgPort {
+	USB_B_Port() {
+		rack::app::SvgPort::setSvg(rack::window::Svg::load(rack::asset::system("res/ComponentLibrary/USB_B.svg")));
+	}
+};
 struct TipsySendTextWidget : rack::ModuleWidget
 {
     TipsySendTextWidget(TipsySendText *m) {
@@ -113,7 +119,7 @@ struct TipsySendTextWidget : rack::ModuleWidget
         addChild(ti);
 
         addOutput(
-            rack::createOutput<rack::PJ301MPort>(rack::Vec(box.size.x - 40, RACK_HEIGHT - 40), module, TipsySendText::TXT_OUT));
+            rack::createOutput<USB_B_Port>(rack::Vec(box.size.x - 40, RACK_HEIGHT - 40), module, TipsySendText::TXT_OUT));
 
 
     }
