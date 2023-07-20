@@ -37,4 +37,6 @@ struct TipsyBG : rack::Widget
         nvgStroke(vg);
     }
 };
+
+
 #endif // TIPSYPROTO_TIPSYWIDGETBITS_H

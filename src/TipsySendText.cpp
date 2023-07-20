@@ -2,8 +2,8 @@
 // Created by Paul Walker on 7/14/23.
 //
 
-#include "rack.hpp"
 #include "TipsyWidgetBits.h"
+#include "components.hpp"
 #include <tipsy/tipsy.h>
 #include <iostream>
 
@@ -41,17 +41,16 @@ struct TipsySendText : rack::Module
 
     tipsy::ProtocolEncoder encoder;
 
-
     void process(const ProcessArgs &args) override
     {
         if (messageUpdates > 0 && encoder.isDormant())
         {
             sendingMessage = currentMessage;
             messageUpdates = 0;
-            encoder.initiateMessage("text/plain", sendingMessage.size() + 1, (unsigned char *)sendingMessage.c_str());
+            auto er = encoder.initiateMessage("text/plain", sendingMessage.size() + 1, (unsigned char *)sendingMessage.c_str());
         }
 
-        float f;
+        float f = 0.f;
         auto res = encoder.getNextMessageFloat(f);
         if (!encoder.isError(res))
         {
@@ -95,11 +94,7 @@ struct TxtIn : rack::LedDisplayTextField
     }
 };
 
-struct USB_B_Port : rack::app::SvgPort {
-	USB_B_Port() {
-		rack::app::SvgPort::setSvg(rack::window::Svg::load(rack::asset::system("res/ComponentLibrary/USB_B.svg")));
-	}
-};
+
 struct TipsySendTextWidget : rack::ModuleWidget
 {
     TipsySendTextWidget(TipsySendText *m) {
@@ -119,7 +114,7 @@ struct TipsySendTextWidget : rack::ModuleWidget
         addChild(ti);
 
         addOutput(
-            rack::createOutput<USB_B_Port>(rack::Vec(box.size.x - 40, RACK_HEIGHT - 40), module, TipsySendText::TXT_OUT));
+            rack::createOutput<USB_A_Port>(rack::Vec(box.size.x - 50, RACK_HEIGHT - 40), module, TipsySendText::TXT_OUT));
 
 
     }
