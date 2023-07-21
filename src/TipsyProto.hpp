@@ -6,8 +6,8 @@
  * Copyright 2023 by the authors as described in the github transaction log
  */
 
-#ifndef INCLUDE_AIRWIN2RACK_HPP
-#define INCLUDE_AIRWIN2RACK_HPP
+#ifndef INCLUDE_TIPSYPROTO_HPP
+#define INCLUDE_TIPSYPROTO_HPP
 
 #include "rack.hpp"
 

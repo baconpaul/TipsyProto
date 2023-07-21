@@ -2,8 +2,8 @@
 // Created by Paul Walker on 7/14/23.
 //
 
-#include "rack.hpp"
 #include "TipsyWidgetBits.h"
+#include "components.hpp"
 #include <tipsy/tipsy.h>
 
 struct TipsyRecvText : rack::Module
@@ -108,7 +108,7 @@ struct TipsyRecvTextWidget : rack::ModuleWidget
         addChild(ti);
 
         addInput(
-            rack::createInput<rack::PJ301MPort>(rack::Vec(40, RACK_HEIGHT - 40), module, TipsyRecvText::TXT_IN));
+            rack::createInput<USB_B_Port>(rack::Vec(box.size.x - 50, RACK_HEIGHT - 40), module, TipsyRecvText::TXT_IN));
 
 
     }
