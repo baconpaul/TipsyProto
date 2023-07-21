@@ -1,46 +1,26 @@
+# If RACK_DIR is not defined when calling the Makefile, default to two directories above
 RACK_DIR ?= ../..
-include $(RACK_DIR)/arch.mk
 
-EXTRA_CMAKE :=
-RACK_PLUGIN := plugin.so
+# FLAGS will be passed to both the C and C++ compiler
+FLAGS += -Ilibs/tipsy-encoder/include -Ilibs/sst-rackhelpers/include
+CFLAGS +=
+CXXFLAGS += -std=c++17
 
-ifdef ARCH_WIN
-  RACK_PLUGIN := plugin.dll
-endif
+# Careful about linking to shared libraries, since you can't assume much about the user's environment and library search path.
+# Static libraries are fine, but they should be added to this plugin's build system.
+LDFLAGS +=
 
-ifdef ARCH_MAC
-  EXTRA_CMAKE := -DCMAKE_OSX_ARCHITECTURES="x86_64"
-  RACK_PLUGIN := plugin.dylib
-  ifdef ARCH_ARM64
-    EXTRA_CMAKE := -DCMAKE_OSX_ARCHITECTURES="arm64"
-    RACK_PLUGIN := plugin-arm64.dylib
-  endif
-endif
-
-CMAKE_BUILD ?= dep/cmake-build
-cmake_rack_plugin := $(CMAKE_BUILD)/$(RACK_PLUGIN)
-
-$(info cmake_rack_plugin target is '$(cmake_rack_plugin)')
-
-# create empty plugin lib to skip the make target execution
-$(shell touch $(RACK_PLUGIN))
-
-# trigger CMake build when running `make dep`
-DEPS += $(cmake_rack_plugin)
-
-$(cmake_rack_plugin): CMakeLists.txt
-	$(CMAKE) -B $(CMAKE_BUILD) -DRACK_SDK_DIR=$(RACK_DIR) -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(CMAKE_BUILD)/dist $(EXTRA_CMAKE)
-	cmake --build $(CMAKE_BUILD) -- -j $(shell getconf _NPROCESSORS_ONLN)
-	cmake --install $(CMAKE_BUILD)
-
-rack_plugin: $(cmake_rack_plugin)
-	cp -vf $(cmake_rack_plugin) .
+# Add .cpp files to the build
+SOURCES += $(wildcard src/*.cpp)
 
 # Add files to the ZIP package when running `make dist`
-dist: rack_plugin res
+# The compiled plugin and "plugin.json" are automatically added.
+DISTRIBUTABLES += res
+DISTRIBUTABLES += $(wildcard LICENSE*)
+DISTRIBUTABLES += $(wildcard presets)
 
-DISTRIBUTABLES += $(wildcard LICENSE*) res README.md 
-
-# Include the VCV plugin Makefile framework
+# Include the Rack plugin Makefile framework
 include $(RACK_DIR)/plugin.mk
+
+CXXFLAGS := $(filter-out -std=c++11,$(CXXFLAGS))
 

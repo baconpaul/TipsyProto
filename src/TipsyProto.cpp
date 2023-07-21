@@ -20,5 +20,4 @@ __attribute__((__visibility__("default"))) void init(rack::Plugin *p)
     pluginInstance->addModel(tipsyRecvText);
 
     INFO("Loading Tipsy");
-
 }
